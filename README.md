@@ -1,6 +1,6 @@
 # reinforcement_learning_online_msds
 
-[![CI](https://github.com/UVADS/reinforcement_learning_online_msds/actions/workflows/ci.yml/badge.svg)](https://github.com/UVADS/reinforcement_learning_online_msds/actions/workflows/ci.yml)
+[![CI](https://github.com/Niarfe/reinforcement_learning_online_msds/actions/workflows/ci.yml/badge.svg)](https://github.com/Niarfe/reinforcement_learning_online_msds/actions/workflows/ci.yml)
 
 Applied Reinforcement Learning for Online MSDS
 
