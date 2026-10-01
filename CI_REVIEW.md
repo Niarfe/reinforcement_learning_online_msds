@@ -34,9 +34,9 @@ packages ("wheels") for:
 **What students should know if they set up their own environment instead of using Colab:**
 
 * A student who installs the latest Python (3.14) and runs `pip install tensorflow` gets
-  `No matching distribution found for tensorflow`. The Keras-based notebooks
-  (`09_policy_gradients_extensions/ppo_cartpole.ipynb` and others that import
-  `keras` / `tensorflow`) will not run.
+  `No matching distribution found for tensorflow`. The notebooks that use Keras/TensorFlow
+  (`05_deep_q_networks/deep_q_networks.ipynb`, `09_policy_gradients_extensions/ppo_cartpole.ipynb`)
+  will not run.
 * **Recommendation:** use Google Colab, or create the environment with Python 3.12:
   `python3.12 -m venv env`.
 * PyTorch will have the same problem on Python 3.15. The weekly CI run will show
