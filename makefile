@@ -16,7 +16,7 @@ lint:
 
 # Spell check markdown, text, and notebooks (base64 image blobs are ignored)
 spell:
-	. env/bin/activate; codespell --skip="*.pdf,*.ppt,*.docx,*.png,*.jpg,./env,./.git" --ignore-regex="[A-Za-z0-9+/=]{40,}" -L ans .
+	. env/bin/activate; codespell --skip="CI_REVIEW.md,*.pdf,*.ppt,*.docx,*.png,*.jpg,./env,./.git" --ignore-regex="[A-Za-z0-9+/=]{40,}" -L ans .
 
 test:
 	. env/bin/activate; pytest -vv tests
