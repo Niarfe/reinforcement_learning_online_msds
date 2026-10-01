@@ -47,14 +47,26 @@ numpy 2.5.3, gymnasium 1.3.0.
   `python3.12 -m venv env`.
 * The weekly CI run will show when stable TensorFlow support for 3.14 and 3.15 arrives.
 
-### 2. `renderlab` is missing a dependency
+### 2. `renderlab` is broken on a fresh install (high impact)
 
-`renderlab` (used to show CartPole videos in notebooks) needs `IPython` but does not
-list it as a dependency. In CI, `import renderlab` failed on every Python version with
-`ModuleNotFoundError: No module named 'IPython'`. It works in Colab and Jupyter only
-because IPython happens to be installed there already. A student who installs packages
-with plain `pip` and runs code outside Jupyter gets this error. **Fixed** by adding
-`ipython` to `requirements.txt`.
+`renderlab` (used to show CartPole videos in the notebooks) was last released in 2023.
+It uses three packages it does not list as dependencies, and two of them have since
+released major versions that remove what renderlab uses. CI found these one after another:
+
+| Package | Problem | Fix in `requirements.txt` |
+|---------|---------|---------------------------|
+| IPython | Not declared: `No module named 'IPython'` | add `ipython` |
+| IPython 9 | Removed `IPython.core.display.display` | pin `ipython<9` |
+| moviepy 2 | Removed `moviepy.editor` | pin `moviepy<2` |
+| OpenCV | Not declared: `No module named 'cv2'` | add `opencv-python-headless` |
+
+The import errors appeared on Python 3.12 and 3.14. The moviepy and OpenCV problems
+were found and fixed locally on Python 3.14.
+
+A student who runs `pip install renderlab` in a new environment cannot display
+CartPole videos. It may work in Colab only because of the packages Colab already
+installs. **Longer term:** replace `renderlab` with gymnasium's built-in
+`RecordVideo` wrapper, which is maintained.
 
 ### 3. The repository had no dependency list
 

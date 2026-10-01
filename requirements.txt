@@ -7,7 +7,10 @@ scipy
 matplotlib
 gymnasium[classic-control]
 renderlab
-ipython  # renderlab imports IPython but does not declare it
+# renderlab (last released 2023) uses these without declaring them, and breaks on newer majors
+ipython<9  # IPython 9 removed IPython.core.display.display
+moviepy<2  # moviepy 2 removed moviepy.editor
+opencv-python-headless
 torch
 tensorflow
 keras

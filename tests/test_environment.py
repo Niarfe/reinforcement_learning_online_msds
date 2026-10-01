@@ -32,6 +32,16 @@ def test_cartpole_runs():
     env.close()
 
 
+def test_renderlab_wraps_cartpole(tmp_path):
+    import gymnasium as gym
+    import renderlab
+
+    env = renderlab.RenderFrame(gym.make("CartPole-v1", render_mode="rgb_array"), str(tmp_path))
+    env.reset(seed=0)
+    env.step(env.action_space.sample())
+    env.close()
+
+
 @pytest.mark.parametrize("path", NOTEBOOKS, ids=lambda p: str(p.relative_to(ROOT)))
 def test_notebook_is_valid(path):
     nbformat.validate(nbformat.read(path, as_version=4))
