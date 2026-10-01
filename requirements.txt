@@ -1,0 +1,12 @@
+# Packages imported by the course notebooks (see tests/test_environment.py).
+# CPU-only torch wheels keep CI installs small; Colab ships its own GPU build.
+--extra-index-url https://download.pytorch.org/whl/cpu
+numpy
+pandas
+scipy
+matplotlib
+gymnasium[classic-control]
+renderlab
+torch
+tensorflow
+keras
