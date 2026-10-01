@@ -20,36 +20,50 @@ The tests run on three Python versions:
 
 ## Findings
 
-### 1. TensorFlow cannot be installed on current Python (high impact)
+### 1. TensorFlow support depends on the Python version (high impact)
 
-We checked which Python versions each course package publishes Linux install
-packages ("wheels") for:
+Results from the first CI run
+([run 36908015231](https://github.com/Niarfe/reinforcement_learning_online_msds/actions/runs/36908015231)),
+which installed the latest version of each package:
 
-| Package | Python 3.12 | Python 3.14 | Python 3.15 |
-|---------|:-----------:|:-----------:|:-----------:|
-| tensorflow | yes | **no** | **no** |
-| torch | yes | yes | **no** |
-| gymnasium, renderlab, numpy, ... | yes | yes | yes |
+| Python | TensorFlow installed | Result |
+|--------|----------------------|--------|
+| 3.12 (Colab) | 2.21.0 (stable) | Installs and imports |
+| 3.14 (current) | **2.22.0rc0 (release candidate)** | Installs and imports, but on a pre-release |
+| 3.15 (upcoming) | **none** | `No matching distribution found for tensorflow`; environment cannot be built |
+
+Other packages installed the same versions on 3.12 and 3.14: torch 2.14.1, keras 3.15.1,
+numpy 2.5.3, gymnasium 1.3.0.
 
 **What students should know if they set up their own environment instead of using Colab:**
 
-* A student who installs the latest Python (3.14) and runs `pip install tensorflow` gets
-  `No matching distribution found for tensorflow`. The notebooks that use Keras/TensorFlow
-  (`05_deep_q_networks/deep_q_networks.ipynb`, `09_policy_gradients_extensions/ppo_cartpole.ipynb`)
-  will not run.
+* **Python 3.14:** there is no stable TensorFlow release for it. When only pre-releases
+  exist, pip installs a release candidate **without warning**. The notebooks that use
+  Keras/TensorFlow (`05_deep_q_networks/deep_q_networks.ipynb`,
+  `09_policy_gradients_extensions/ppo_cartpole.ipynb`) will run on untested,
+  pre-release software, and any problems will be hard to diagnose.
+* **Python 3.15:** TensorFlow cannot be installed at all.
 * **Recommendation:** use Google Colab, or create the environment with Python 3.12:
   `python3.12 -m venv env`.
-* PyTorch will have the same problem on Python 3.15. The weekly CI run will show
-  when upstream support arrives.
+* The weekly CI run will show when stable TensorFlow support for 3.14 and 3.15 arrives.
 
-### 2. The repository had no dependency list
+### 2. `renderlab` is missing a dependency
+
+`renderlab` (used to show CartPole videos in notebooks) needs `IPython` but does not
+list it as a dependency. In CI, `import renderlab` failed on every Python version with
+`ModuleNotFoundError: No module named 'IPython'`. It works in Colab and Jupyter only
+because IPython happens to be installed there already. A student who installs packages
+with plain `pip` and runs code outside Jupyter gets this error. **Fixed** by adding
+`ipython` to `requirements.txt`.
+
+### 3. The repository had no dependency list
 
 There was no `requirements.txt`. Students only found out what to install from
 `!pip install` lines spread across notebooks. We added `requirements.txt`, built
 from every `import` in the notebooks, so `make update` creates a working
 environment in one step.
 
-### 3. Spelling
+### 4. Spelling
 
 codespell reports misspellings in notebook text. Examples:
 
@@ -59,7 +73,7 @@ codespell reports misspellings in notebook text. Examples:
 These are left in place on purpose so the instructor can review them; the CI
 spelling job will stay red until they are fixed.
 
-### 4. Lint is clean
+### 5. Lint is clean
 
 No syntax errors or undefined names in any notebook. The lint rules are kept
 narrow on purpose, so the blanks students fill in do not trigger failures.

@@ -12,8 +12,8 @@ jobs:
   lint-and-spell:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - run: make tools
@@ -35,8 +35,8 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     name: test (python ${{ matrix.python-version }})
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
