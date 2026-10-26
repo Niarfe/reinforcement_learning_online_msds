@@ -10,5 +10,6 @@ At the conclusion of this module, you should be able to:
 - Explain how Actor-Critic Methods work and explain their benefits
 - Explain the mechanics, benefits, and challenges of Trust Region Policy Optimization (TRPO)
 - Explain the mechanics and benefits of Proximal Policy Optimization (PPO)
-
+- Identify the risk of out of distribution (OOD) actions and how Behavioral Cloning addresses the issue
+- Identify the components of the TD3+BC algorithm and its learning goal
 
